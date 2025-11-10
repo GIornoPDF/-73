@@ -105,4 +105,48 @@ class Program
         }
     }
 
-    
+    static void FindBooks()
+    {
+        Console.WriteLine("Поиск книг по:");
+        Console.WriteLine("1. Названию");
+        Console.WriteLine("2. Автору");
+        Console.WriteLine("3. Жанру");
+        string searchChoice = Console.ReadLine();
+
+        IEnumerable<Book> foundBooks = Enumerable.Empty<Book>();
+
+        switch (searchChoice)
+        {
+            case "1":
+                Console.Write("Введите название книги: ");
+                string titleSearch = Console.ReadLine();
+                foundBooks = books.Where(b => b.Title.Contains(titleSearch, StringComparison.OrdinalIgnoreCase));
+                break;
+            case "2":
+                Console.Write("Введите автора книги: ");
+                string authorSearch = Console.ReadLine();
+                foundBooks = books.Where(b => b.Author.Contains(authorSearch, StringComparison.OrdinalIgnoreCase));
+                break;
+            case "3":
+                Console.Write("Введите жанр книги: ");
+                string genreSearch = Console.ReadLine();
+                foundBooks = books.Where(b => b.Genre.Equals(genreSearch, StringComparison.OrdinalIgnoreCase));
+                break;
+            default:
+                Console.WriteLine("Неизвестный выбор.");
+                return;
+        }
+
+        if (!foundBooks.Any())
+        {
+            Console.WriteLine("Книги не найдены.");
+            return;
+        }
+
+        foreach (var book in foundBooks)
+        {
+            Console.WriteLine(book);
+        }
+    }
+
+   
