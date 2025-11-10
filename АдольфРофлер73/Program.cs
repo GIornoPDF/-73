@@ -137,4 +137,124 @@ namespace UniversityManagementSystem
             }
         }
 
-       
+        static void CreateCourse()
+        {
+            ViewTeachers();
+            Console.Write("Введите ID преподавателя для курса: ");
+            int teacherId = int.Parse(Console.ReadLine());
+
+            var teacher = teachers.FirstOrDefault(t => t.Id == teacherId);
+            if (teacher == null)
+            {
+                Console.WriteLine("Преподаватель не найден.");
+                return;
+            }
+
+            Console.Write("Введите название курса: ");
+            string title = Console.ReadLine();
+
+            courses.Add(new Course(title, teacher));
+            Console.WriteLine($"Курс '{title}' успешно создан!");
+        }
+
+        static void ViewCourses()
+        {
+            if (courses.Count == 0)
+            {
+                Console.WriteLine("Нет курсов в системе.");
+                return;
+            }
+
+            foreach (var course in courses)
+            {
+                Console.WriteLine(course);
+                if (course.EnrolledStudents.Count > 0)
+                {
+                    Console.WriteLine("Записанные студенты:");
+                    foreach (var student in course.EnrolledStudents)
+                    {
+                        Console.WriteLine($" - {student.Name}");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Нет записанных студентов.");
+                }
+            }
+        }
+    }
+
+    abstract class Person
+    {
+        private static int _idCounter = 1;
+
+        public int Id { get; }
+        public string Name { get; private set; }
+        public int Age { get; private set; }
+        public string ContactInfo { get; private set; }
+
+        protected Person(string name, int age, string contactInfo)
+        {
+            Id = _idCounter++;
+            Name = name;
+            Age = age;
+            ContactInfo = contactInfo;
+        }
+
+        public override string ToString()
+        {
+            return $"ID: {Id}, Имя: {Name}, Возраст: {Age}, Контактная информация: {ContactInfo}";
+        }
+    }
+
+    class Student : Person
+    {
+        public List<Course> EnrolledCourses { get; private set; } = new List<Course>();
+
+        public Student(string name, int age, string contactInfo) : base(name, age, contactInfo) { }
+
+        public void EnrollInCourse(Course course)
+        {
+            EnrolledCourses.Add(course);
+            course.AddStudent(this);
+        }
+
+        public override string ToString()
+        {
+            return base.ToString() + $", Записанные курсы: {EnrolledCourses.Count}";
+        }
+    }
+
+    class Teacher : Person
+    {
+        public Teacher(string name, int age, string contactInfo) : base(name, age, contactInfo) { }
+    }
+
+    class Course
+    {
+        private static int _idCounter = 1;
+
+        public int Id { get; }
+        public string Title { get; private set; }
+        public Teacher Instructor { get; private set; }
+        public List<Student> EnrolledStudents { get; private set; } = new List<Student>();
+
+        public Course(string title, Teacher instructor)
+        {
+            Id = _idCounter++;
+            Title = title;
+            Instructor = instructor;
+        }
+        public void AddStudent(Student student)
+        {
+            EnrolledStudents.Add(student);
+        }
+
+        public override string ToString()
+        {
+            return $"ID: {Id}, Название курса: {Title}, Преподаватель: {Instructor.Name}";
+        }
+    }
+}
+
+
