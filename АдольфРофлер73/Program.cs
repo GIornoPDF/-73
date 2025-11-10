@@ -51,4 +51,41 @@ class Program
         }
     }
 
-   
+    static void AddBook()
+    {
+        Console.Write("Введите название книги: ");
+        string title = Console.ReadLine();
+
+        Console.Write("Введите автора книги: ");
+        string author = Console.ReadLine();
+
+        Console.WriteLine("Выберите жанр (1 - Фантастика, 2 - Роман, 3 - Приключения): ");
+        string genreInput = Console.ReadLine();
+        string genre = genreInput switch
+        {
+            "1" => "Фантастика",
+            "2" => "Роман",
+            "3" => "Приключения",
+            _ => "Неизвестный"
+        };
+
+        Console.Write("Введите год издания: ");
+        int year = int.Parse(Console.ReadLine());
+
+        Console.Write("Введите цену книги: ");
+        decimal price = decimal.Parse(Console.ReadLine());
+
+        books.Add(new Book
+        {
+            Id = nextId++,
+            Title = title,
+            Author = author,
+            Genre = genre,
+            Year = year,
+            Price = price
+        });
+
+        Console.WriteLine("Книга успешно добавлена!");
+    }
+
+    
