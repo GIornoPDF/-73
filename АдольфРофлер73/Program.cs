@@ -177,4 +177,19 @@ class Program
         }
     }
 
-    
+    static void ShowPriceRange()
+    {
+        if (!books.Any())
+        {
+            Console.WriteLine("Нет доступных книг.");
+            return;
+        }
+
+        var mostExpensiveBook = books.OrderByDescending(b => b.Price).First();
+        var cheapestBook = books.OrderBy(b => b.Price).First();
+
+        Console.WriteLine($"Самая дорогая книга: {mostExpensiveBook}");
+        Console.WriteLine($"Самая дешевая книга: {cheapestBook}");
+    }
+
+   
