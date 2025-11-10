@@ -110,5 +110,31 @@ namespace UniversityManagementSystem
             student.EnrollInCourse(course);
             Console.WriteLine($"Студент {student.Name} успешно записан на курс {course.Title}!");
         }
+        static void AddTeacher()
+        {
+            Console.Write("Введите имя преподавателя: ");
+            string name = Console.ReadLine();
+            Console.Write("Введите возраст преподавателя: ");
+            int age = int.Parse(Console.ReadLine());
+            Console.Write("Введите контактную информацию: ");
+            string contactInfo = Console.ReadLine();
+
+            teachers.Add(new Teacher(name, age, contactInfo));
+            Console.WriteLine("Преподаватель успешно добавлен!");
+        }
+
+        static void ViewTeachers()
+        {
+            if (teachers.Count == 0)
+            {
+                Console.WriteLine("Нет преподавателей в системе.");
+                return;
+            }
+
+            foreach (var teacher in teachers)
+            {
+                Console.WriteLine(teacher);
+            }
+        }
 
        
