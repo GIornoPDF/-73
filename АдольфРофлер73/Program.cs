@@ -69,5 +69,46 @@ namespace UniversityManagementSystem
             students.Add(new Student(name, age, contactInfo));
             Console.WriteLine("Студент успешно добавлен!");
         }
+        static void ViewStudents()
+        {
+            if (students.Count == 0)
+            {
+                Console.WriteLine("Нет студентов в системе.");
+                return;
+            }
+
+            foreach (var student in students)
+            {
+                Console.WriteLine(student);
+            }
+        }
+
+        static void EnrollStudent()
+        {
+            ViewStudents();
+            Console.Write("Введите ID студента для записи на курс: ");
+            int studentId = int.Parse(Console.ReadLine());
+
+            var student = students.FirstOrDefault(s => s.Id == studentId);
+            if (student == null)
+            {
+                Console.WriteLine("Студент не найден.");
+                return;
+            }
+
+            ViewCourses();
+            Console.Write("Введите ID курса для записи: ");
+            int courseId = int.Parse(Console.ReadLine());
+
+            var course = courses.FirstOrDefault(c => c.Id == courseId);
+            if (course == null)
+            {
+                Console.WriteLine("Курс не найден.");
+                return;
+            }
+
+            student.EnrollInCourse(course);
+            Console.WriteLine($"Студент {student.Name} успешно записан на курс {course.Title}!");
+        }
 
        
