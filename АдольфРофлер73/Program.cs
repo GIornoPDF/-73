@@ -192,4 +192,30 @@ class Program
         Console.WriteLine($"Самая дешевая книга: {cheapestBook}");
     }
 
-   
+    static void GroupBooksByAuthor()
+    {
+        var groupedBooks = books.GroupBy(b => b.Author)
+                                .Select(g => new { Author = g.Key, Count = g.Count() });
+
+        foreach (var group in groupedBooks)
+        {
+            Console.WriteLine($"Автор: {group.Author}, Количество книг: {group.Count}");
+        }
+    }
+}
+
+class Book
+{
+    public int Id { get; set; }
+    public string Title { get; set; }
+    public string Author { get; set; }
+    public string Genre { get; set; }
+    public int Year { get; set; }
+    public decimal Price { get; set; }
+
+    public override string ToString()
+    {
+        return $"ID: {Id}, Название: {Title}, Автор: {Author}, Жанр: {Genre}, Год: {Year}, Цена: {Price:C}";
+    }
+}
+
