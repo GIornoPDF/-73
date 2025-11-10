@@ -149,4 +149,32 @@ class Program
         }
     }
 
-   
+    static void SortBooks()
+    {
+        Console.WriteLine("Сортировка книг по:");
+        Console.WriteLine("1. Названию");
+        Console.WriteLine("2. Году издания");
+        string sortChoice = Console.ReadLine();
+
+        IEnumerable<Book> sortedBooks;
+
+        switch (sortChoice)
+        {
+            case "1":
+                sortedBooks = books.OrderBy(b => b.Title);
+                break;
+            case "2":
+                sortedBooks = books.OrderBy(b => b.Year);
+                break;
+            default:
+                Console.WriteLine("Неизвестный выбор.");
+                return;
+        }
+
+        foreach (var book in sortedBooks)
+        {
+            Console.WriteLine(book);
+        }
+    }
+
+    
