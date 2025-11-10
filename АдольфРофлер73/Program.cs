@@ -48,3 +48,53 @@ class Program
         string shortestWord = words.OrderBy(w => w.Length).FirstOrDefault();
         string longestWord = words.OrderByDescending(w => w.Length).FirstOrDefault();
         var letterFrequency = new Dictionary<char, int>();
+        foreach (var c in text.ToLower())
+        {
+            if (char.IsLetter(c))
+            {
+                if (letterFrequency.ContainsKey(c))
+                    letterFrequency[c]++;
+                else
+                    letterFrequency[c] = 1;
+            }
+        }
+
+        return new TextStatistics
+        {
+            WordCount = words.Count,
+            SentenceCount = sentences.Count,
+            ShortestWord = shortestWord,
+            LongestWord = longestWord,
+            VowelsCount = vowelsCount,
+            ConsonantsCount = consonantsCount,
+            LetterFrequency = letterFrequency
+        };
+    }
+
+    static void DisplayStatistics(TextStatistics stats)
+    {
+        Console.WriteLine($"Количество слов: {stats.WordCount}");
+        Console.WriteLine($"Количество предложений: {stats.SentenceCount}");
+        Console.WriteLine($"Самое короткое слово: {stats.ShortestWord}");
+        Console.WriteLine($"Самое длинное слово: {stats.LongestWord}");
+        Console.WriteLine($"Количество гласных букв: {stats.VowelsCount}");
+        Console.WriteLine($"Количество согласных букв: {stats.ConsonantsCount}");
+
+        Console.WriteLine("Частота встречаемости каждой буквы:");
+        foreach (var kvp in stats.LetterFrequency.OrderBy(kvp => kvp.Key))
+        {
+            Console.WriteLine($"{kvp.Key}: {kvp.Value}");
+        }
+    }
+}
+
+class TextStatistics
+{
+    public int WordCount { get; set; }
+    public int SentenceCount { get; set; }
+    public string ShortestWord { get; set; }
+    public string LongestWord { get; set; }
+    public int VowelsCount { get; set; }
+    public int ConsonantsCount { get; set; }
+    public Dictionary<char, int> LetterFrequency { get; set; }
+}
