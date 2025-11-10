@@ -88,4 +88,21 @@ class Program
         Console.WriteLine("Книга успешно добавлена!");
     }
 
+    static void RemoveBook()
+    {
+        Console.Write("Введите идентификатор книги для удаления: ");
+        int id = int.Parse(Console.ReadLine());
+
+        var bookToRemove = books.FirstOrDefault(b => b.Id == id);
+        if (bookToRemove != null)
+        {
+            books.Remove(bookToRemove);
+            Console.WriteLine("Книга успешно удалена!");
+        }
+        else
+        {
+            Console.WriteLine("Книга с таким идентификатором не найдена.");
+        }
+    }
+
     
